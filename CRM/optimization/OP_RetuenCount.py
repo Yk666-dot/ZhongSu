@@ -28,12 +28,9 @@ class ReturnCountTest(crm_login.TestClass):
                 target.click()
             except:
                 break
-        print(i)
         target = self.driver.find_element_by_xpath('//*[@id="app"]/div/div[2]/section/div/div[4]/div[1]')
         self.driver.execute_script("arguments[0].scrollIntoView();", target)
         expect = target.text[4:]
         self.assertEqual(expect, i)
 
 
-if __name__ == '__main__':
-    crm_login.main()
