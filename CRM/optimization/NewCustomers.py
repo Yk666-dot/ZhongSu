@@ -77,8 +77,6 @@ def test_01(self):
     self.driver.find_element_by_xpath('//*[@id="app"]/div/div[2]/section/div/div/form/div[9]/div[2]/button[1]').click()
 
 
-if __name__ == '__main__':
-   crm_login.main()
 
 
 
