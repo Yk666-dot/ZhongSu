@@ -40,8 +40,6 @@ class CustomerNameTest(crm_login.TestClass):
         time.sleep(3)
         result = self.driver.find_element_by_xpath('/html/body/div[2]/div[1]/div[1]/ul/li[%i]' % number)
         result.text
-        print(result.text)
-        print(number)
         self.assertEqual(cn, result.text)
         self.driver.back()
         self.driver.refresh()
