@@ -1,6 +1,7 @@
 import pymysql
 import pandas as pd
 
+
 class DB():
     def __init__(self, host='localhost', port=3306, db='', user='root', passwd='root', charset='utf8'):
         # 建立连接
@@ -22,8 +23,8 @@ class DB():
 
 
 if __name__ == '__main__':
-    sql = 'select parent_sid from user_account where phone = 13905843198'
     db_name = 'zs_user_system'
+    sql = 'select parent_sid from user_account where phone = 13905843198'
     host = 'rm-uf60275574n809i7r90210.mysql.rds.aliyuncs.com'
     with DB(host=host, user='testuser', passwd='testuser2020', db=db_name) as db:
         db.execute(sql)

@@ -7,7 +7,7 @@ import ready_login
 
 
 @paramunittest.parametrized(
-    {"expect1": "中国塑料城接待", "expect2": "余姚", "expect3": "中塑联机洽谈"},
+    {"expect1": "中国塑料城接待", "expect2": "余姚", "expect3": "说塑聊料"},
 )
 class EnterimTest(ready_login.TestClass):
     def setParameters(self, expect1, expect2, expect3):
@@ -24,10 +24,10 @@ class EnterimTest(ready_login.TestClass):
         handles = self.driver.window_handles
         for window in handles:
             self.driver.switch_to.window(window)
-            if self.driver.title == "中塑联机洽谈":
+            if self.driver.title == "说塑聊料":
                 break
         self.driver.implicitly_wait(20)
-        self.result = self.driver.find_element_by_class_name('h1dname').text
+        self.result = self.driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div[2]/div[1]/div[1]/strong').text
         self.assertEqual(self.expect1, self.result)
         self.driver.close()
         time.sleep(2)
@@ -52,10 +52,10 @@ class EnterimTest(ready_login.TestClass):
         handles = self.driver.window_handles
         for window in handles:
             self.driver.switch_to.window(window)
-            if self.driver.title == "中塑联机洽谈":
+            if self.driver.title == "说塑聊料":
                 break
         self.driver.implicitly_wait(20)
-        self.result = self.driver.find_element_by_class_name('h1dname')
+        self.result = self.driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div[2]/div[1]/div[1]/strong')
         self.assertIn(self.expect2, self.result.text)
         self.driver.close()
 
@@ -70,9 +70,11 @@ class EnterimTest(ready_login.TestClass):
         handles = self.driver.window_handles
         for window in handles:
             self.driver.switch_to.window(window)
-            if self.driver.title == "中塑联机洽谈":
+            if self.driver.title == "说塑聊料":
                 break
         self.result = self.driver.title
         self.assertEqual(self.expect3, self.result)
         self.driver.close()
 
+if __name__ == '__main__':
+        ready_login.main()
