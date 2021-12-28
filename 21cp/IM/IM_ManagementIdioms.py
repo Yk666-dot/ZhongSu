@@ -39,19 +39,38 @@ class ManagementIdiomsTest(ready_login.TestClass):
             self.driver.switch_to.window(window)
             if self.driver.title == "中塑联机洽谈":
                 break
-        time.sleep(3)
-        pag.click(799, 904)
-        time.sleep(2)
-        pag.click(1000, 658)
+        # time.sleep(3)
+        # pag.click(799, 904)
+        # time.sleep(2)
+        # pag.click(1000, 658)
         self.driver.implicitly_wait(20)
-        self.driver.find_element_by_class_name('addCommonWords').click()
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[1]/div[1]').click()
         self.driver.implicitly_wait(20)
-        self.driver.find_element_by_xpath('//*[@id="app"]/div[1]/div[1]/div[1]/textarea').send_keys(self.msg)
-        self.driver.find_element_by_xpath('//*[@id="app"]/div[1]/div[1]/div[1]/div/span/b[2]').click()
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[1]/div[2]/div[1]/div[2]/i').click()
+        self.driver.implicitly_wait(20)
+        self.driver.find_element_by_xpath(
+            '//*[@id="chat-edit"]/div/div/div[1]/div[1]/div[2]/div/div[2]/div/div[2]/button').click()
+        self.driver.implicitly_wait(20)
+        self.driver.find_element_by_xpath(
+            '//*[@id="chat-edit"]/div/div/div[1]/div[1]/div[3]/div/div[2]/div/div[1]/div/textarea').send_keys(self.msg)
+        self.driver.find_element_by_xpath(
+            '//*[@id="chat-edit"]/div/div/div[1]/div[1]/div[3]/div/div[2]/div/div[2]/div[2]/button[1]').click()
         time.sleep(3)
-        lens = self.driver.find_elements_by_xpath('//*[@id="app"]/div[1]/div[1]/ul/li')
-        lis = self.driver.find_element_by_xpath('//*[@id="app"]/div[1]/div[1]/ul/li[%s]/p' % len(lens))
-        self.assertIn(lis.text, self.msg)
-        # 删除
-        self.driver.find_element_by_xpath('//*[@id="app"]/div[1]/div[1]/ul/li[%s]/span/b[2]' % len(lens)).click()
+        i = 1
+        while i > 0:
+            try:
+                result = self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[1]/div[2]/div/div[2]/div/div[1]/div/div[%s]/div[1]'% str(i)).text
+                print(result)
+                if result == self.msg:
+                    # 删除
+                    self.assertEqual(result, self.msg)
+                    self.driver.find_element_by_xpath(
+                        '//*[@id="chat-edit"]/div/div/div[1]/div[1]/div[2]/div/div[2]/div/div[1]/div/div[%s]/div[2]/div[2]'% str(i)).click()
+                    self.driver.implicitly_wait(20)
+                    self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[1]/div[4]/div/div[2]/div/div[2]/button[1]').click()
+                    break
+                i += 1
+            except:
+                print('保存失败')
+                break
 
