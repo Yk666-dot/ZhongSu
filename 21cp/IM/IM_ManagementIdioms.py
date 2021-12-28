@@ -60,7 +60,6 @@ class ManagementIdiomsTest(ready_login.TestClass):
         while i > 0:
             try:
                 result = self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[1]/div[2]/div/div[2]/div/div[1]/div/div[%s]/div[1]'% str(i)).text
-                print(result)
                 if result == self.msg:
                     # 删除
                     self.assertEqual(result, self.msg)
