@@ -25,21 +25,26 @@ class SendBusinessTest(ready_login.TestClass):
             if self.driver.title == "中塑联机洽谈":
                 break
         self.driver.implicitly_wait(20)
-        self.driver.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[2]/div[3]/div[2]/div[1]/ul/li[6]').click()
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[6]/div[1]').click()
         self.driver.implicitly_wait(20)
         expect = self.driver.find_element_by_xpath(
-            '//*[@id="app"]/div[1]/div[1]/div/div[2]/div[1]/table/tr[1]/td[3]').text
+            '//*[@id="chat-edit"]/div/div/div[1]/div[6]'
+            '/div[2]/div/div[2]/div/div/div[1]/div/div[2]/div[2]/div[2]/div[1]').text
         self.driver.find_element_by_xpath(
-            '//*[@id="app"]/div[1]/div[1]/div/div[2]/div[1]/table/tr[1]/td[1]/label').click()
-        self.driver.find_element_by_class_name('active').click()
-        result = self.driver.find_element_by_xpath('//*[@id="chatlist"]/li/div/div/div/div/div[1]/p').text
-        self.assertEqual(expect, result)
-
+             '//*[@id="chat-edit"]/div/div/div[1]/div[6]/div[2]/div/div[2]/div/div/div[1]/div/div[2]/div[1]').click()
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[6]/div[2]/div/div[2]/div'
+                                          '/div/div[2]/button[1]').click()
+        self.driver.implicitly_wait(20)
+        line = len(self.driver.find_elements_by_xpath('//*[@id="chat-list"]/div[1]/div/div'))
+        print(line)
+        result1 = self.driver.find_element_by_xpath(
+            '//*[@id="chat-list"]/div[1]/div/div[%i]/div/div[2]/div/div/div[1]/div[1]/h3' % int(line+1)).text
+        self.assertEqual(expect, result1)
     # 点击名片进行洽谈
-    def test_02(self):
-        expect = self.driver.find_element_by_class_name('cardname').text
-        self.driver.find_element_by_xpath('//*[@id="chatlist"]/li/div/div/div').click()
-        time.sleep(3)
-        result = self.driver.find_element_by_class_name('h1dname').text
-        self.assertEqual(expect, result)
+        self.driver.find_element_by_xpath('//*[@id="chat-list"]/div[1]/div/div[%i]/div/div[2]' % int(line+1)).click()
+        self.driver.implicitly_wait(20)
+        self.driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div[2]/div[4]/div/div[2]/div/button').click()
+        result = self.driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div[2]/div[1]/div[1]/strong').text
+        print(result1)
+        self.assertEqual(result1, result)
 
