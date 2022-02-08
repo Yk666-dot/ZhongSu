@@ -34,46 +34,22 @@ class SearchTest(ready_login.TestClass):
             if self.driver.title == "中塑联机洽谈":
                 break
         self.driver.implicitly_wait(20)
-        self.driver.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[1]/div[2]/input').send_keys(self.group)
-        self.driver.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[1]/div[2]/input').send_keys(Keys.ENTER)
+        self.driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div/div[2]/div[1]/input').send_keys("测试")
+        time.sleep(3)
+        self.driver.find_element_by_xpath('//*[@id="app"]/div/div/div[2]/div/div[2]/div[1]/input').send_keys(Keys.ENTER)
         self.driver.implicitly_wait(20)
-        # 验证单聊
-        single_lis = self.driver.find_elements_by_xpath('//*[@id="app"]/div[1]/div[1]/div/div[2]/div/div[1]/div/ul/li')
-        for s in single_lis:
-            self.assertIn(self.group, s.text)
-        # 验证群聊
-        group_lis = self.driver.find_elements_by_xpath('//*[@id="app"]/div[1]/div[1]/div/div[2]/div/div[2]/div/ul/li')
-        for g in group_lis:
-            self.assertIn(self.group, g.text)
+        i = len(self.driver.find_elements_by_xpath('//*[@id="app"]/div/div/div[2]/div[1]/div[2]/div[2]/div[1]/div/div'))
+        # # chat_lis = []
+        a = 1
+        while a >= 1:
+            try:
+                title = self.driver.find_element_by_xpath(
+                    '//*[@id="app"]/div/div/div[2]/div[1]/div[2]/div[2]/div[1]/div/div[%i]' % a).get_attribute('title')
+                self.assertIn("测试", title)
+            except:
+                break
+            a += 1
 
-    # 测试更多单聊和更多群聊
-    def test_02(self):
-        # 更多单聊
-        self.driver.find_element_by_xpath('//*[@id="app"]/div[1]/div[1]/div[1]/div[2]/div/div[1]/div/div/span').click()
-        self.driver.implicitly_wait(20)
-        single_lis = self.driver.find_elements_by_xpath('//*[@id="app"]/div[1]/div[1]/div[2]/ul/li')
-        # 必大于3个
-        self.assertTrue(len(single_lis) > 3)
-        for s in single_lis:
-            self.assertIn(self.group, s.text)
-        # 更多群聊
-        target = self.driver.find_element_by_xpath('//*[@id="app"]/div[1]/div[1]/div/div[2]/div/div[2]/div/div/span')
-        self.driver.execute_script("arguments[0].scrollIntoView();", target)
-        self.driver.implicitly_wait(20)
-        target.click()
-        self.driver.find_element_by_xpath('//*[@id="app"]/div[1]/div[1]/div/div[2]/div/div[2]/div/div/span').click()
-        self.driver.implicitly_wait(20)
-        group_lis = self.driver.find_elements_by_xpath('//*[@id="app"]/div[1]/div[1]/div[2]/ul/li')
-        # 必大于3个
-        self.assertTrue(len(group_lis) > 3)
-        for g in group_lis:
-            self.assertIn(self.group, g.text)
+        self.assertEqual(a-1, i)
 
-    # 测试点击与对应公司洽谈
-    def test_03(self):
-        expect = self.driver.find_element_by_xpath(
-            '//*[@id="app"]/div[1]/div[1]/div/div[2]/div/div[1]/div/ul/li[1]/p').text
-        self.driver.find_element_by_xpath(
-            '//*[@id="app"]/div[1]/div[1]/div[1]/div[2]/div/div[1]/div/ul/li[1]').click()
-        result = self.driver.find_element_by_class_name('h1dname').text
-        self.assertEqual(expect, result)
+
