@@ -25,57 +25,58 @@ class SendCommodityTest(ready_login.TestClass):
             if self.driver.title == "中塑联机洽谈":
                 break
         # 发送原料
+        self.driver.implicitly_wait(20)
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[1]').click()
+        self.driver.implicitly_wait(20)
+        expect = self.driver.find_element_by_xpath(
+            '//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[2]/div/div[2]/div/div/div[1]/div[3]/div[1]/div[1]/div[2]').text
+        self.driver.find_element_by_xpath(
+            '//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[2]/div/div[2]/div/div/div[1]/div[3]/div[1]/div[1]/div[1]').click()
+        self.driver.find_element_by_xpath(
+            '//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[2]/div/div[2]/div/div/div[2]/button[1]').click()
         nu = 1
         while nu <= 60:
             try:
-                self.driver.implicitly_wait(20)
-                self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[1]').click()
-                self.driver.implicitly_wait(20)
-                expect = self.driver.find_element_by_xpath(
-                    '//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[2]/div/div[2]/div/div/div[1]/div[3]/div[1]/div[1]/div[2]').text
-                self.driver.find_element_by_xpath(
-                    '//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[2]/div/div[2]/div/div/div[1]/div[3]/div[1]/div[1]/div[1]').click()
-                self.driver.find_element_by_xpath(
-                    '//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[2]/div/div[2]/div/div/div[2]/button[1]').click()
                 time.sleep(2)
                 line = len(self.driver.find_elements_by_xpath('//*[@id="chat-list"]/div[1]/div/div'))
 
                 result = self.driver.find_element_by_xpath(
-                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/a/div[1]/h3' % str(line-1)).text
+                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/a/div[1]/h3' % str(line)).text
                 self.assertIn(expect, result)
                 break
             except Exception as error:
                 print(error)
+                print(nu)
                 nu += 1
 
     def test_02(self):
         # 发送废塑料
+        self.driver.implicitly_wait(20)
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[1]').click()
+        self.driver.implicitly_wait(20)
+        self.driver.find_element_by_xpath(
+            '//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[2]/div/div[2]/div/div/div[1]/div[2]/div[4]').click()
+        time.sleep(3)
+        expect = self.driver.find_element_by_xpath(
+            '//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[2]/div/div[2]/div/div/div[1]/div[3]/div/div[1]/div[2]').text
+        time.sleep(2)
+        self.driver.find_element_by_xpath(
+            '//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[2]/div/div[2]/div/div/div[1]/div[3]/div/div[1]/div[1]').click()
+        self.driver.find_element_by_xpath(
+            '//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[2]/div/div[2]/div/div/div[2]/button[1]').click()
         nu = 1
         while nu <= 60:
             try:
-                self.driver.implicitly_wait(20)
-                self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[1]').click()
-                self.driver.implicitly_wait(20)
-                self.driver.find_element_by_xpath(
-                    '//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[2]/div/div[2]/div/div/div[1]/div[2]/div[4]').click()
-                time.sleep(3)
-                expect = self.driver.find_element_by_xpath(
-                    '//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[2]/div/div[2]/div/div/div[1]/div[3]/div/div[1]/div[2]').text
-                print(expect)
-                time.sleep(2)
-                self.driver.find_element_by_xpath(
-                    '//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[2]/div/div[2]/div/div/div[1]/div[3]/div/div[1]/div[1]').click()
-                self.driver.find_element_by_xpath(
-                    '//*[@id="chat-edit"]/div/div/div[1]/div[4]/div[2]/div/div[2]/div/div/div[2]/button[1]').click()
                 time.sleep(2)
                 line = len(self.driver.find_elements_by_xpath('//*[@id="chat-list"]/div[1]/div/div'))
 
                 result = self.driver.find_element_by_xpath(
-                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/a/div[1]/h3' % str(line - 1)).text
+                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/a/div[1]/h3' % str(line)).text
                 self.assertEqual(expect, result)
                 break
             except Exception as error:
                 print(error)
+                print(nu)
                 nu += 1
 
     # 点击进入商品详情
@@ -86,12 +87,13 @@ class SendCommodityTest(ready_login.TestClass):
                 line = len(self.driver.find_elements_by_xpath('//*[@id="chat-list"]/div[1]/div/div'))
 
                 expect = self.driver.find_element_by_xpath(
-                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/a/div[1]/h3' % str(line - 1)).text
+                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/a/div[1]/h3' % str(line)).text
                 self.driver.find_element_by_xpath(
-                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/a' % str(line - 1)).click()
+                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/a' % str(line)).click()
                 handles = self.driver.window_handles
                 self.driver.switch_to_window(handles[-1])
                 result = self.driver.title
+                self.driver.close()
                 for window in handles:
                     self.driver.switch_to.window(window)
                     if self.driver.title == "说塑聊料":
@@ -100,30 +102,33 @@ class SendCommodityTest(ready_login.TestClass):
                 break
             except Exception as error:
                 print(error)
+                print(nu)
                 nu += 1
 
     # 发送可供
     def test_04(self):
+        self.driver.implicitly_wait(20)
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[5]/div[1]').click()
+        self.driver.implicitly_wait(20)
+        expect = self.driver.find_element_by_xpath(
+            '//*[@id="chat-edit"]/div/div/div[1]/div[5]/div[2]/div/div[2]/div/div/div[1]/div[3]/div/div[1]/div[2]').text
+        self.driver.find_element_by_xpath(
+            '//*[@id="chat-edit"]/div/div/div[1]/div[5]/div[2]/div/div[2]/div/div/div[1]/div[3]/div/div[1]/div[1]').click()
+        self.driver.find_element_by_xpath(
+            '//*[@id="chat-edit"]/div/div/div[1]/div[5]/div[2]/div/div[2]/div/div/div[2]/button[1]').click()
         nu = 1
         while nu <= 60:
             try:
-                self.driver.implicitly_wait(20)
-                self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[5]/div[1]').click()
-                self.driver.implicitly_wait(20)
-                expect = self.driver.find_element_by_xpath(
-                    '//*[@id="chat-edit"]/div/div/div[1]/div[5]/div[2]/div/div[2]/div/div/div[1]/div[3]/div/div[1]/div[2]').text
-                self.driver.find_element_by_xpath(
-                    '//*[@id="chat-edit"]/div/div/div[1]/div[5]/div[2]/div/div[2]/div/div/div[1]/div[3]/div/div[1]/div[1]').click()
-                self.driver.find_element_by_xpath(
-                    '//*[@id="chat-edit"]/div/div/div[1]/div[5]/div[2]/div/div[2]/div/div/div[2]/button[1]').click()
+                time.sleep(2)
                 line = len(self.driver.find_elements_by_xpath('//*[@id="chat-list"]/div[1]/div/div'))
 
                 result = self.driver.find_element_by_xpath(
-                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/a/div[1]/h3' % str(line - 1)).text
+                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/a/div[1]/h3' % str(line)).text
                 self.assertIn(expect, result)
                 break
             except Exception as error:
                 print(error)
+                print(nu)
                 nu += 1
 
     # 点击可供进入企业产品
@@ -132,19 +137,18 @@ class SendCommodityTest(ready_login.TestClass):
         while nu <= 60:
             try:
                 line = len(self.driver.find_elements_by_xpath('//*[@id="chat-list"]/div[1]/div/div'))
-                expect = self.driver.find_element_by_xpath(
-                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/a/div[1]/h3' % str(line - 1)).text
                 self.driver.find_element_by_xpath(
-                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/a' % str(line - 1)).click
+                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div' % str(line)).click()
+                time.sleep(3)
                 handles = self.driver.window_handles
                 self.driver.switch_to_window(handles[-1])
                 result = self.driver.title
-                self.assertIn(expect, result)
+                self.assertIn('测试很新的名字稍微有点长的有限公司-商铺首页-中塑在线商铺-中塑在线塑料行业门户', result)
                 break
             except Exception as error:
                 print(error)
+                print(nu)
                 nu += 1
 
 
-if __name__ == '__main__':
-    ready_login.main()
+

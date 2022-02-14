@@ -1,6 +1,7 @@
 import paramunittest
 import time
 import ready_login
+from selenium.webdriver.common.keys import Keys
 
 message = "字数"
 while len(message) <= 202:
@@ -44,62 +45,136 @@ class SendmessageTest(ready_login.TestClass):
             self.driver.switch_to.window(window)
             if self.driver.title == "中塑联机洽谈":
                 break
+        # 点击回车发送
         self.driver.implicitly_wait(20)
-        self.driver.find_element_by_xpath('//*[@id="textarea"]').send_keys(self.msg)
-        time.sleep(2)
-        self.driver.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[2]/div[3]/div[2]/button').click()
-        self.driver.find_element_by_xpath('//*[@id="textarea"]').send_keys(self.msg1)
-        time.sleep(2)
-        self.driver.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[2]/div[3]/div[2]/button').click()
-        result = self.driver.find_element_by_class_name('chatContent').text
-        self.assertIn(self.msg, result)
-        self.assertIn(self.msg1, result)
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/textarea').send_keys(self.msg)
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/textarea').send_keys(Keys.ENTER)
+        nu = 1
+        while nu <= 60:
+            try:
+                line = len(self.driver.find_elements_by_xpath('//*[@id="chat-list"]/div[1]/div/div'))
+                result = self.driver.find_element_by_xpath(
+                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div' % str(line)).text
+                self.assertEqual(self.msg, result)
+                break
+            except Exception as error:
+                print(error)
+                print(nu)
+                nu += 1
+        # 点击按钮发送
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/textarea').send_keys(self.msg1)
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/button').click()
+        nu = 1
+        while nu <= 60:
+            try:
+                line = len(self.driver.find_elements_by_xpath('//*[@id="chat-list"]/div[1]/div/div'))
+                result = self.driver.find_element_by_xpath(
+                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div' % str(line)).text
+                self.assertEqual(self.msg1, result)
+                break
+            except Exception as error:
+                print(error)
+                print(nu)
+                nu += 1
+        # result = self.driver.find_element_by_class_name('chatContent').text
+        # self.assertIn(self.msg, result)
+        # self.assertIn(self.msg1, result)
 
     # 使用常用语句
     def test_02(self):
-        self.driver.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[2]/div[3]/div[2]/div[1]/ul/li[1]').click()
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[1]/div[1]').click()
         self.driver.implicitly_wait(20)
-        xpath = '//*[@id="app"]/div/div[2]/div[2]/div[3]/div[2]/div[1]/ul/li[1]/div/div/ul/li[1]'
+        xpath = '//*[@id="chat-edit"]/div/div/div[1]/div[1]/div[2]/div[2]/div/div[1]'
         expect = self.driver.find_element_by_xpath(xpath).text
         self.driver.find_element_by_xpath(xpath).click()
         time.sleep(2)
-        self.driver.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[2]/div[3]/div[2]/button').click()
-        result = self.driver.find_element_by_class_name('chatContent').text
-        self.assertIn(expect, result)
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/button').click()
+        nu = 1
+        while nu <= 60:
+            try:
+                line = len(self.driver.find_elements_by_xpath('//*[@id="chat-list"]/div[1]/div/div'))
+                result = self.driver.find_element_by_xpath(
+                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div' % str(line)).text
+                self.assertEqual(expect, result)
+                break
+            except Exception as error:
+                print(error)
+                print(nu)
+                nu += 1
 
     # 发送文件
     def test_03(self):
-        self.driver.find_element_by_class_name('sfile').send_keys(self.route)
-        time.sleep(3)
-        img = self.driver.find_element_by_xpath('//*[@id="chatlist"]/li[4]/div/div/div/a/img')
-        self.assertEqual('img', img.tag_name)
-        # 上传不支持的大于20m
-        self.driver.find_element_by_class_name('sfile').send_keys(self.route1)
-        self.driver.implicitly_wait(20)
-        tip = self.driver.find_element_by_class_name('toast').text
-        self.assertEqual("上传文件不能超过20MB！", tip)
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[2]/div/input').send_keys(self.route)
+        nu = 1
+        while nu <= 60:
+            try:
+                time.sleep(3)
+                line = len(self.driver.find_elements_by_xpath('//*[@id="chat-list"]/div[1]/div/div'))
+                img = self.driver.find_element_by_xpath(
+                        '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/div/img' % str(line))
+                self.assertIn('100z100', img.get_attribute('src'))
+                break
+            except Exception as error:
+                print(error)
+                print(nu)
+                nu += 1
         # 上传xls
         time.sleep(2)
-        self.driver.find_element_by_class_name('sfile').send_keys(self.route2)
-        self.driver.implicitly_wait(20)
-        file = self.driver.find_element_by_xpath('//*[@id="chatlist"]/li[5]/div/div/div/div/a/div[1]/p[1]').text
-        self.assertEqual("中心主题1_20210414_133137.xls", file)
-        # 上传不支持的视频文件
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[2]/div/input').send_keys(self.route2)
+        nu = 1
+        while nu <= 60:
+            try:
+                time.sleep(3)
+                line = len(self.driver.find_elements_by_xpath('//*[@id="chat-list"]/div[1]/div/div'))
+                img = self.driver.find_element_by_xpath(
+                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/a' % str(line))
+                self.assertIn('中心主题1_20210414_133137.xls', img.get_attribute('title'))
+                break
+            except Exception as error:
+                print(error)
+                print(nu)
+                nu += 1
+        # 上传视频文件
         time.sleep(2)
-        self.driver.find_element_by_class_name('sfile').send_keys(self.route3)
-        self.driver.implicitly_wait(20)
-        tip = self.driver.find_element_by_xpath('//*[@id="app"]/div[1]/div[1]/div/p').text
-        self.assertEqual("文件格式不正确！", tip)
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[2]/div/input').send_keys(self.route3)
+        nu = 1
+        while nu <= 60:
+            try:
+                time.sleep(3)
+                line = len(self.driver.find_elements_by_xpath('//*[@id="chat-list"]/div[1]/div/div'))
+                video = self.driver.find_element_by_xpath(
+                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/video' % str(line))
+                self.assertIn("video(9).MP4.MP4", video.get_attribute('src'))
+                break
+            except Exception as error:
+                print(error)
+                print(nu)
+                nu += 1
 
-    # 发送开票信息
+    # 发送发票信息
     def test_04(self):
         time.sleep(3)
-        self.driver.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[2]/div[3]/div[2]/div[1]/ul/li[7]').click()
+        self.driver.find_element_by_xpath('//*[@id="chat-edit"]/div/div/div[1]/div[7]/div[1]').click()
         self.driver.implicitly_wait(20)
-        info = self.driver.find_element_by_xpath('//*[@id="app"]/div[1]/div[1]/div/ul').text
-        self.driver.find_element_by_class_name('sendBtn').click()
-        self.driver.implicitly_wait(20)
-        expect = self.driver.find_element_by_xpath('//*[@id="chatlist"]/li[6]/div/div/div/div/div[1]').text
-        self.assertEqual(expect, info)
+        expect = self.driver.find_element_by_xpath(
+            '//*[@id="chat-edit"]/div/div/div[1]/div[7]/div[2]/div/div[2]/div/div/div[1]/div/div[2]/div[1]/div[2]').text
+        self.driver.find_element_by_xpath(
+            '//*[@id="chat-edit"]/div/div/div[1]/div[7]/div[2]/div/div[2]/div/div/div[2]/button[1]').click()
+        nu = 1
+        while nu <= 60:
+            try:
+                time.sleep(3)
+                line = len(self.driver.find_elements_by_xpath('//*[@id="chat-list"]/div[1]/div/div'))
+                result = self.driver.find_element_by_xpath(
+                    '//*[@id="chat-list"]/div[1]/div/div[%s]/div/div[2]/div/div/ul/li[2]/span' % str(line)).text
+                self.assertEqual(expect, result)
+                break
+            except Exception as error:
+                print(error)
+                print(nu)
+                nu += 1
 
+
+if __name__ == '__main__':
+    ready_login.main()
 
