@@ -2,7 +2,12 @@ from HTMLTestRunner import HTMLTestRunner
 import unittest
 import time
 import os
+import IM_SendMessage
 
+
+suit = unittest.TestSuite()
+testcase = unittest.TestLoader().loadTestsFromModule(IM_SendMessage)  # 存在多个类时要运行整个文件用这个方法
+suit.addTest(testcase)
 path = os.path.join(os.getcwd())
 print(path)
 # 自动搜索项目根目录下的所有case，构造测试集；返回TestSuit对象
@@ -18,4 +23,6 @@ runner = HTMLTestRunner(
     description='练习HTMLTestRunner的使用',
     tester='俞锴'
 )
-runner.run(discover)
+
+runner.run(suit)
+# runner.run(discover)
