@@ -73,7 +73,22 @@ class AuthenticationReportTest(unittest.TestCase):
             if self.driver.title == '申请认证-中塑在线企业认证':
                 break
         self.assertEqual(self.driver.title, '申请认证-中塑在线企业认证')
+        target = self.driver.find_element_by_xpath('//*[@id="customer"]/div[2]/div')
+        self.driver.execute_script("arguments[0].scrollIntoView();", target)
+        self.driver.implicitly_wait(20)
+        self.driver.find_element_by_xpath('//*[@id="customer"]/div[2]/div/a').click()
         self.driver.close()
+        handles = self.driver.window_handles
+        self.driver.switch_to.window(handles[-1])
+        self.driver.implicitly_wait(20)
+        result = self.driver.find_element_by_xpath('//*[@id="isAuthentication"]').get_attribute('class')
+        self.assertIn('checked', result)
+        self.driver.find_element_by_xpath('/html/body/div[5]/div[4]/div[1]/div[2]/div[2]/div[1]/div[3]/a[2]/i').click()
+        self.driver.close()
+        handles = self.driver.window_handles
+        self.driver.switch_to.window(handles[-1])
+        self.driver.close()
+        self.driver.switch_to.window(h)
         # 点击在线客服
         self.driver.switch_to.window(h)
         self.driver.implicitly_wait(20)
@@ -198,9 +213,37 @@ class AuthenticationReportTest(unittest.TestCase):
         handles = self.driver.window_handles
         self.driver.switch_to.window(handles[-1])
         self.driver.implicitly_wait(20)
-        result = self.driver.find_element_by_class_name('company-name').text
-        self.assertEqual(expect, result)
-
+        company = self.driver.find_element_by_class_name('company-name').text
+        self.assertEqual(expect, company)
+        # 点击商铺顶部导航栏中塑认证跳转报告
+        result = self.driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/a[7]').text
+        self.assertEqual('中塑认证', result)
+        self.driver.find_element_by_xpath('/html/body/div[2]/div[2]/div/a[7]').click()
+        i = 1
+        while i <= 60:
+            try:
+                self.assertIn('%s全景展示' % company, self.driver.title)
+                break
+            except Exception as error:
+                print(i, error)
+                i += 1
+        # 点击商铺中塑认证勋章跳转报告
+        self.driver.implicitly_wait(20)
+        i = 1
+        while i <= 60:
+            try:
+                self.driver.find_element_by_xpath('/html/body/div[2]/div/div[2]/a').click()
+                break
+            except Exception as error:
+                print(i, error)
+                i += 1
+        handles = self.driver.window_handles
+        self.driver.switch_to.window(handles[-1])
+        self.driver.implicitly_wait(20)
+        self.driver.find_element_by_xpath('/html/body/div[3]/div[2]/div/div[2]/div[1]/a').click()
+        handles = self.driver.window_handles
+        self.driver.switch_to.window(handles[-1])
+        self.assertIn('%s全景展示' % company, self.driver.title)
 
 if __name__ == '__main__':
     unittest.main()
