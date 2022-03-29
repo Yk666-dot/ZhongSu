@@ -5,6 +5,7 @@ from selenium.webdriver.common.keys import Keys
 import ready_login
 import PARM
 
+
 class IntoReportTest(ready_login.TestClass):
 
     # 从平台企业库进入
