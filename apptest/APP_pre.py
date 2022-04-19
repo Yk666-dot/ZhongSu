@@ -24,9 +24,11 @@ class LoginTest(unittest.TestCase):
         caps["appPackage"] = "com.zhongsu.online"
         caps["appActivity"] = ".ui.login.activity.AdvertisedActivity"
         caps["ensureWebviewsHavePages"] = True
-        caps["newCommandTimeout"] = 7000
+        caps["newCommandTimeout"] = 1200000
         caps["automationName"] = "UiAutomator2"
         caps['recreateChromeDriverSessions'] = True
+        caps['skipServerInstallation'] = True
+        caps['skipDeviceInitialization'] = True
         cls.driver = webdriver.Remote("http://127.0.0.1:4723/wd/hub", caps)
         cls.driver.implicitly_wait(20)
         el1 = cls.driver.find_element_by_id("com.zhongsu.online:id/tv_approve")

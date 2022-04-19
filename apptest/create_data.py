@@ -2,7 +2,7 @@ import random
 
 
 def random_num(num):
-    i = num
+    i = 1
     lis = []
     while i <= num:
         lis.append(str(random.randint(0, 9)))
