@@ -53,5 +53,5 @@ def slide(self, text):
 
 # 显示等待  5秒内每隔0.5秒扫描一次页面，若不存在元素，则抛异常
 def ExplicitWait(self, element):
-    el = WebDriverWait(self.driver, 5, 0.5).until(lambda driver: driver.find_element_by_xpath(element))
+    el = WebDriverWait(self.driver, 10, 0.5).until(lambda driver: driver.find_element_by_xpath(element))
     return el

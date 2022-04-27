@@ -6,6 +6,7 @@ from selenium.webdriver.common.actions.pointer_input import PointerInput
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+import time
 
 
 class SearchTest(APP_pre.LoginTest):
@@ -34,6 +35,7 @@ class SearchTest(APP_pre.LoginTest):
         self.assertEqual('热门助剂推荐', hot)
         # 跳转搜索页面
         self.driver.find_element_by_id('com.zhongsu.online:id/et_search').click()
+        time.sleep(3)
         self.driver.find_element_by_id('com.zhongsu.online:id/et_search').send_keys('神高达上东国际阿萨德刚回家是大概就爱上大公鸡')
         actions = ActionChains(self.driver)
         actions.w3c_actions = ActionBuilder(self.driver, mouse=PointerInput(interaction.POINTER_TOUCH, "touch"))

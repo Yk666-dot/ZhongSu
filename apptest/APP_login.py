@@ -1,5 +1,5 @@
 import APP_pre
-import toast
+from Script import toast
 import time
 from selenium.webdriver.support.ui import WebDriverWait #注意区分大小写，导入WebDriverWait等待的类
 from selenium.webdriver.support import expected_conditions as EC #es,expected_conditions首字母，方便调用方法。as取一个别名，调方法的话直接EC.

@@ -1,19 +1,13 @@
-import APP_pre
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.common.actions import interaction
-from selenium.webdriver.common.actions.action_builder import ActionBuilder
-from selenium.webdriver.common.actions.pointer_input import PointerInput
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
+from apptest import APP_pre
 import random
-import toast
+from Script import toast
 import time
-import wait
-import create_data
+from Script import wait
+from apptest import create_data
 
 
 class RndPassword:
+
     def email(self):
         i = 1
         lis = []
@@ -110,17 +104,17 @@ class MineTest(APP_pre.LoginTest):
         self.driver.find_element_by_id('com.zhongsu.online:id/et_new_phone').clear()
         self.driver.find_element_by_id('com.zhongsu.online:id/et_new_phone').send_keys('13722983392')
         self.driver.find_element_by_id('com.zhongsu.online:id/btn_submit').click()
-        #self.assertEqual('手机验证码错误', toast.get_toast_text(self, toast='手机验证码错误')) 提示没加
+        # self.assertEqual('手机验证码错误', toast.get_toast_text(self, toast='手机验证码错误')) 提示没加
         # 新手机验证码错误
         self.driver.find_element_by_id('com.zhongsu.online:id/et_new_phone').clear()
         self.driver.find_element_by_id('com.zhongsu.online:id/et_new_phone').send_keys('19022837728')
         time.sleep(55)
-        #wait.countdown(self, element='com.zhongsu.online:id/btn_get_check_code', tip="获取验证码")
+        # wait.countdown(self, element='com.zhongsu.online:id/btn_get_check_code', tip="获取验证码")
         self.driver.find_element_by_id('com.zhongsu.online:id/btn_get_check_code').click()
         self.driver.find_element_by_id('com.zhongsu.online:id/et_check_code').clear()
         self.driver.find_element_by_id('com.zhongsu.online:id/et_check_code').send_keys('123456')
         self.driver.find_element_by_id('com.zhongsu.online:id/btn_submit').click()
-        #self.assertEqual('手机验证码错误', toast.get_toast_text(self, toast='手机验证码错误')) 提示没加
+        # self.assertEqual('手机验证码错误', toast.get_toast_text(self, toast='手机验证码错误')) 提示没加
         self.driver.find_element_by_id('com.zhongsu.online:id/ib_back_layout_toolbar_back_righttv').click()
         time.sleep(3)
         self.driver.find_element_by_id('com.zhongsu.online:id/ib_back_layout_toolbar_back_righttv').click()

@@ -1,10 +1,7 @@
-import APP_pre
-import random
-import toast
+from apptest import APP_pre
+from Script import toast
 import time
-import wait
-import create_data
-from appium.webdriver.common.mobileby import MobileBy
+from Script import wait
 
 
 class MyShopTest(APP_pre.LoginTest):
@@ -119,7 +116,8 @@ class MyShopTest(APP_pre.LoginTest):
         self.driver.find_element_by_xpath(
             '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android'
             '.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.webkit.WebView'
-            '/android.webkit.WebView/android.view.View/android.view.View/android.view.View[23]/android.view.View[3]').click()
+            '/android.webkit.WebView/android.view.View/android.view.View/android.view.View[23]'
+            '/android.view.View[3]').click()
         self.assertEqual("无法与自己建立会话", toast.get_toast_text(self, toast="无法与自己建立会话"))
 
     # 进入供应列表
@@ -182,14 +180,4 @@ class MyShopTest(APP_pre.LoginTest):
         self.driver.implicitly_wait(20)
         expect = self.driver.find_element_by_id('com.zhongsu.online:id/baidu_btn').text
         self.assertIn('百度地图', expect)
-
-
-
-        
-
-
-
-
-
-
 
