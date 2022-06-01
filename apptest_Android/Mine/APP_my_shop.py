@@ -1,4 +1,4 @@
-from apptest import APP_pre
+from apptest_Android import APP_pre
 from Script import toast
 import time
 from Script import wait

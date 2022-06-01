@@ -1,9 +1,9 @@
-from apptest import APP_pre
+from apptest_Android import APP_pre
 import random
 from Script import toast
 import time
 from Script import wait
-from apptest import create_data
+from apptest_Android import create_data
 
 
 class RndPassword:
