@@ -2,12 +2,12 @@ from HTMLTestRunner_cn import HTMLTestRunner  # github中有收藏
 import unittest
 import time
 import os
-from apptest_Android.Mine import APP_my_provision
+from apptest_Android.Mine import APP_publish
 from apptest_Android.Mine import APP_SalesManagement
 import sys
 
 suit = unittest.TestSuite()
-testcase = unittest.TestLoader().loadTestsFromModule(APP_my_provision)  # 存在多个类时要运行整个文件用这个方法
+testcase = unittest.TestLoader().loadTestsFromModule(APP_publish)  # 存在多个类时要运行整个文件用这个方法
 suit.addTest(testcase)
 path = os.path.join(os.getcwd())
 print(path)
