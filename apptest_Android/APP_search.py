@@ -14,12 +14,8 @@ class SearchTest(APP_pre.LoginTest):
     def test_01(self):
         # 切换搜索产品类型成功
         self.driver.implicitly_wait(20)
-        self.driver.find_element_by_xpath('/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout'
-                                          '/android.widget.FrameLayout/android.widget.LinearLayout'
-                                          '/android.widget.FrameLayout/android.widget.RelativeLayout'
-                                          '/android.widget.HorizontalScrollView/android.widget.LinearLayout'
-                                          '/android.widget.LinearLayout[1]/android.widget.LinearLayout'
-                                          '/android.widget.ImageView').click()
+        self.driver.find_element_by_xpath('//*[@resource-id="com.zhongsu.online:id/tab_layout"]/android.widget'
+                                          '.LinearLayout/android.widget.LinearLayout[1]').click()
         self.driver.implicitly_wait(20)
         self.driver.find_element_by_id('com.zhongsu.online:id/et_search').click()
         self.driver.implicitly_wait(20)

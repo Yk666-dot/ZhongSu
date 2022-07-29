@@ -29,7 +29,7 @@ class LoginTest(unittest.TestCase):
         caps['recreateChromeDriverSessions'] = True
         caps['skipServerInstallation'] = True
         caps['skipDeviceInitialization'] = True
-        cls.driver = webdriver.Remote("http://127.0.0.1:4723/wd/hub", caps)
+        cls.driver = webdriver.Remote("http://127.0.0.1:4724/wd/hub", caps)
         cls.driver.implicitly_wait(20)
         el1 = cls.driver.find_element_by_id("com.zhongsu.online:id/tv_approve")
         el1.click()

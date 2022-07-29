@@ -55,3 +55,4 @@ def slide(self, text):
 def ExplicitWait(self, element):
     el = WebDriverWait(self.driver, 10, 0.5).until(lambda driver: driver.find_element_by_xpath(element))
     return el
+

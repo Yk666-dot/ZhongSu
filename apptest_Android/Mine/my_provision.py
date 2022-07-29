@@ -1,12 +1,6 @@
 from apptest_Android import APP_pre
 import time
-from Script import ScreenShot
-from Script import Mouse_keyboard
 import toast
-import random
-from selenium.webdriver.support.ui import WebDriverWait
-import sys
-from Script import wait
 import random
 # noinspection PyBroadException
 

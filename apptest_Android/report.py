@@ -2,13 +2,16 @@ from HTMLTestRunner_cn import HTMLTestRunner  # github中有收藏
 import unittest
 import time
 import os
-from apptest_Android.Mine import APP_publish
-from apptest_Android.Mine import APP_SalesManagement
+from apptest_Android.Mine.my_provision import MyProvisionTest
+from apptest_Android.Subscribe.goods import QuotationTest
+from apptest_Android.Mine import SalesManagement
 import sys
 
+case_name = [QuotationTest]
 suit = unittest.TestSuite()
-testcase = unittest.TestLoader().loadTestsFromModule(APP_publish)  # 存在多个类时要运行整个文件用这个方法
-suit.addTest(testcase)
+for i in case_name:
+    testcase = unittest.TestLoader().loadTestsFromTestCase(i)
+    suit.addTest(testcase)
 path = os.path.join(os.getcwd())
 print(path)
 # 自动搜索项目根目录下的所有case，构造测试集；返回TestSuit对象
