@@ -1,13 +1,11 @@
+# from fuction import HTMLTestRunner
 from HTMLTestRunner_cn import HTMLTestRunner  # github中有收藏
 import unittest
 import time
 import os
-from apptest_Android.Mine.my_provision import MyProvisionTest
-from apptest_Android.Subscribe.goods import QuotationTest
-from apptest_Android.Mine import SalesManagement
-import sys
 
-case_name = [QuotationTest]
+
+case_name = []
 suit = unittest.TestSuite()
 for i in case_name:
     testcase = unittest.TestLoader().loadTestsFromTestCase(i)
@@ -15,8 +13,8 @@ for i in case_name:
 path = os.path.join(os.getcwd())
 print(path)
 # 自动搜索项目根目录下的所有case，构造测试集；返回TestSuit对象
-discover = unittest.defaultTestLoader.discover(path, pattern="IM*.py")
-# 然后HTMLTestRunner执行容器中的用例，然后生成测试报告
+discover = unittest.defaultTestLoader.discover(path, pattern="test*.py")
+# # 然后HTMLTestRunner执行容器中的用例，然后生成测试报告
 time = time.strftime("%Y-%m-%d %H_%M_%S")
 file = time+'测试.html'
 f = open('C:/Users/msi/Documents/测试报告/%s_report.html' % time, 'wb')
@@ -32,5 +30,5 @@ runner = HTMLTestRunner(
 
 )
 
-runner.run(suit)
-# runner.run(discover)
+# runner.run(suit)
+runner.run(discover)
