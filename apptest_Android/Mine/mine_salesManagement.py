@@ -5,9 +5,17 @@ import toast
 from selenium.webdriver.support.ui import WebDriverWait
 from Script import wait
 import random
+from Script import ElementExsit
 
 
 class SalesManagementTest(APP_pre.LoginTest):
+    def close_tip(self):
+        while True:
+            element = ElementExsit.is_element_exsit_id(self, id='com.zhongsu.online:id/last_approve_tv')
+            if element is True:
+                self.driver.find_element_by_id('com.zhongsu.online:id/last_approve_tv').click()
+            else:
+                break
 
     # 设置log, 这里使用默认log
     # def log(self):
@@ -44,6 +52,8 @@ class SalesManagementTest(APP_pre.LoginTest):
         # SalesManagementTest.log(self='SalesManagementTest')
         self.driver.implicitly_wait(20)
         self.driver.find_element_by_id('com.zhongsu.online:id/btn_my_supply').click()
+        self.driver.implicitly_wait(10)
+        SalesManagementTest.close_tip(self)
         self.driver.implicitly_wait(20)
         text = self.driver.find_element_by_xpath(
             '//*[@resource-id="com.zhongsu.online:id/rc_newslist"]/android.view.ViewGroup['
@@ -51,7 +61,9 @@ class SalesManagementTest(APP_pre.LoginTest):
         # 切改性料
         self.driver.find_element_by_xpath(
             '//android.widget.LinearLayout[@content-desc="改性料"]/android.widget.TextView').click()
+        self.driver.implicitly_wait(10)
         time.sleep(3)
+        SalesManagementTest.close_tip(self)
         actual = self.driver.find_element_by_xpath(
             '//*[@resource-id="com.zhongsu.online:id/rc_newslist"]/android.view.ViewGroup['
             '1]/android.widget.LinearLayout[1]/android.widget.TextView').text
@@ -60,6 +72,7 @@ class SalesManagementTest(APP_pre.LoginTest):
         self.driver.find_element_by_xpath(
             '//android.widget.LinearLayout[@content-desc="再生料"]/android.widget.TextView').click()
         time.sleep(3)
+        SalesManagementTest.close_tip(self)
         actual = self.driver.find_element_by_xpath(
             '//*[@resource-id="com.zhongsu.online:id/rc_newslist"]/android.view.ViewGroup['
             '1]/android.widget.LinearLayout[1]/android.widget.TextView').text
@@ -68,6 +81,7 @@ class SalesManagementTest(APP_pre.LoginTest):
         self.driver.find_element_by_xpath(
             '//android.widget.LinearLayout[@content-desc="助剂"]/android.widget.TextView').click()
         time.sleep(3)
+        SalesManagementTest.close_tip(self)
         actual = self.driver.find_element_by_xpath(
             '//*[@resource-id="com.zhongsu.online:id/rc_newslist"]/android.view.ViewGroup['
             '1]/android.widget.LinearLayout[1]/android.widget.TextView').text
@@ -76,6 +90,7 @@ class SalesManagementTest(APP_pre.LoginTest):
         self.driver.find_element_by_xpath(
             '//android.widget.LinearLayout[@content-desc="原料"]/android.widget.TextView').click()
         time.sleep(3)
+        SalesManagementTest.close_tip(self)
         actual = self.driver.find_element_by_xpath(
             '//*[@resource-id="com.zhongsu.online:id/rc_newslist"]/android.view.ViewGroup['
             '1]/android.widget.LinearLayout[1]/android.widget.TextView').text
@@ -124,6 +139,8 @@ class SalesManagementTest(APP_pre.LoginTest):
             self.driver.find_element_by_xpath(
                 '/hierarchy/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.ListView/android'
                 '.widget.TextView[2]').click()
+        else:
+            self.driver.find_elements_by_id('android:id/text1')[1].click()
         self.driver.implicitly_wait(20)
         self.driver.find_element_by_id('com.zhongsu.online:id/tv_confirm').click()
         self.driver.implicitly_wait(20)

@@ -3,6 +3,7 @@ from HTMLTestRunner_cn import HTMLTestRunner  # github中有收藏
 import unittest
 import time
 import os
+from apptest_Android.Mine import mine_salesManagement
 
 
 case_name = []
@@ -12,6 +13,8 @@ for i in case_name:
     suit.addTest(testcase)
 path = os.path.join(os.getcwd())
 print(path)
+testcase = unittest.TestLoader().loadTestsFromModule(mine_salesManagement)  # 存在多个类时要运行整个文件用这个方法
+suit.addTest(testcase)
 # 自动搜索项目根目录下的所有case，构造测试集；返回TestSuit对象
 discover = unittest.defaultTestLoader.discover(path, pattern="test*.py")
 # # 然后HTMLTestRunner执行容器中的用例，然后生成测试报告
@@ -30,5 +33,5 @@ runner = HTMLTestRunner(
 
 )
 
-# runner.run(suit)
-runner.run(discover)
+runner.run(suit)
+# runner.run(discover)
