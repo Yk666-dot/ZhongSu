@@ -39,6 +39,8 @@ class MineTest(APP_pre.LoginTest):
         while i <= 6:
             self.driver.keyevent(13)
             i += 1
+        self.driver.implicitly_wait(5)
+        self.driver.find_element_by_id('com.zhongsu.online:id/btn_confirm').click()
 
         # 账号信息用户账户确认
         self.driver.implicitly_wait(20)

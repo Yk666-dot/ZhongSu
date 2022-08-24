@@ -1,9 +1,12 @@
 from apptest_Android import APP_pre
 from Script import ElementExsit
+from Script.login import login
 from Script.refresh import Refresh
 import time
 import toast
+from Script import refresh
 import random
+# self.driver.find_element_by_xpath('//android.widget.TextView[@text="改性料"]')
 
 
 class QuotationTest(APP_pre.LoginTest):
@@ -12,21 +15,26 @@ class QuotationTest(APP_pre.LoginTest):
         # 我的订阅未登录需要跳转登录
         self.driver.implicitly_wait(5)
         self.driver.find_element_by_xpath('//*[@resource-id="com.zhongsu.online:id/tab_layout"]/android.widget'
-                                          '.LinearLayout/android.widget.LinearLayout[2]').click()
+                                          '.LinearLayout/android.widget.LinearLayout[5]').click()
         self.driver.implicitly_wait(5)
-        self.driver.find_element_by_id('com.zhongsu.online:id/to_login').click()
+        self.driver.find_element_by_xpath('//android.widget.TextView[@text="我的订阅"]').click()
         self.driver.implicitly_wait(5)
-        self.driver.find_element_by_id('com.zhongsu.online:id/et_user_account').send_keys('18888648053')
-        self.driver.find_element_by_id('com.zhongsu.online:id/btn_submit_login').click()
+        login(self)
+        self.driver.find_element_by_xpath('//android.widget.TextView[@text="我的订阅"]').click()
         self.driver.implicitly_wait(5)
-        self.driver.find_element_by_id('com.zhongsu.online:id/now_approve_tv').click()
-        self.driver.implicitly_wait(5)
-        self.driver.find_element_by_id('com.zhongsu.online:id/tv_1').click()
-        i = 1
-        while i <= 6:
-            self.driver.keyevent(13)
-            i += 1
-        time.sleep(3)
+        # self.driver.find_element_by_id('com.zhongsu.online:id/et_user_account').send_keys('18888648053')
+        # self.driver.find_element_by_id('com.zhongsu.online:id/btn_submit_login').click()
+        # self.driver.implicitly_wait(5)
+        # self.driver.find_element_by_id('com.zhongsu.online:id/now_approve_tv').click()
+        # self.driver.implicitly_wait(5)
+        # self.driver.find_element_by_id('com.zhongsu.online:id/tv_1').click()
+        # i = 1
+        # while i <= 6:
+        #     self.driver.keyevent(13)
+        #     i += 1
+        # self.driver.implicitly_wait(5)
+        # self.driver.find_element_by_id('com.zhongsu.online:id/btn_confirm').click()
+        # time.sleep(3)
         self.driver.find_element_by_xpath(
             '//android.widget.LinearLayout[@content-desc="商品"]/android.widget.TextView').click()
 
@@ -49,7 +57,9 @@ class QuotationTest(APP_pre.LoginTest):
                 self.driver.find_element_by_id('com.zhongsu.online:id/last_approve_tv').click()
                 time.sleep(3)
                 self.driver.find_element_by_id('com.zhongsu.online:id/ib_back_layout_toolbar_back_righttv').click()
-                self.driver.implicitly_wait(5)
+                time.sleep(3)
+                refresh.Refresh(self, x1=680, y1=738, y2=1428)
+                time.sleep(3)
             elif element is False:
                 self.driver.find_element_by_id('com.zhongsu.online:id/ib_back_layout_toolbar_back_righttv').click()
                 break
@@ -122,7 +132,9 @@ class QuotationTest(APP_pre.LoginTest):
                 self.driver.find_element_by_id('com.zhongsu.online:id/last_approve_tv').click()
                 time.sleep(3)
                 self.driver.find_element_by_id('com.zhongsu.online:id/ib_back_layout_toolbar_back_righttv').click()
-                self.driver.implicitly_wait(5)
+                time.sleep(3)
+                refresh.Refresh(self, x1=680, y1=738, y2=1428)
+                time.sleep(3)
             elif element is False:
                 self.driver.find_element_by_id('com.zhongsu.online:id/ib_back_layout_toolbar_back_righttv').click()
                 break
@@ -189,7 +201,9 @@ class QuotationTest(APP_pre.LoginTest):
                 time.sleep(3)
                 self.driver.find_element_by_id(
                     'com.zhongsu.online:id/ib_back_layout_toolbar_back_righttv').click()
-                self.driver.implicitly_wait(5)
+                time.sleep(3)
+                refresh.Refresh(self, x1=680, y1=738, y2=1428)
+                time.sleep(3)
             elif element is False:
                 self.driver.find_element_by_id(
                     'com.zhongsu.online:id/ib_back_layout_toolbar_back_righttv').click()
@@ -249,7 +263,9 @@ class QuotationTest(APP_pre.LoginTest):
                 time.sleep(3)
                 self.driver.find_element_by_id(
                     'com.zhongsu.online:id/ib_back_layout_toolbar_back_righttv').click()
-                self.driver.implicitly_wait(5)
+                time.sleep(3)
+                refresh.Refresh(self, x1=680, y1=738, y2=1428)
+                time.sleep(3)
             elif element is False:
                 self.driver.find_element_by_id(
                     'com.zhongsu.online:id/ib_back_layout_toolbar_back_righttv').click()

@@ -11,6 +11,8 @@ from selenium.webdriver.common.actions.action_builder import ActionBuilder
 from selenium.webdriver.common.actions.pointer_input import PointerInput
 from appium.webdriver.common.touch_action import TouchAction
 import time
+from Script import ElementExsit
+
 
 class LoginTest(unittest.TestCase):
     @classmethod
@@ -52,9 +54,18 @@ class LoginTest(unittest.TestCase):
         time.sleep(3)
         el2 = cls.driver.find_element_by_id("com.zhongsu.online:id/guide_image")
         el2.click()
-        WebDriverWait(cls.driver, 30, 0.5).until(
-            EC.presence_of_element_located((By.ID, 'com.zhongsu.online:id/img_cancel')))
-        cls.driver.find_element_by_id('com.zhongsu.online:id/img_cancel').click()
+        try:
+            cls.driver.implicitly_wait(5)
+            cls.driver.find_element_by_id('com.zhongsu.online:id/cancel_act')
+            text = "True"
+        except:
+            text = "False"
+        if text == "True":
+            cls.driver.find_element_by_id('com.zhongsu.online:id/cancel_act').click()
+
+        # WebDriverWait(cls.driver, 30, 0.5).until(
+        #    EC.presence_of_element_located((By.ID, 'com.zhongsu.online:id/img_cancel')))
+        # cls.driver.find_element_by_id('com.zhongsu.online:id/img_cancel').click()
         cls.driver.implicitly_wait(20)
         cls.driver.find_element_by_xpath('//*[@resource-id="com.zhongsu.online:id/tab_layout"]'
                                          '/android.widget.LinearLayout[1]/android.widget.LinearLayout[5]'

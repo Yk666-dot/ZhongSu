@@ -17,6 +17,9 @@ class AttestationTest(APP_pre.LoginTest):
         while i <= 6:
             self.driver.keyevent(13)
             i += 1
+        self.driver.implicitly_wait(5)
+        self.driver.find_element_by_id('com.zhongsu.online:id/btn_confirm').click()
+        time.sleep(3)
 
     # 测试企业基本信息和工商信息返回企业认证
     def test_02(self):

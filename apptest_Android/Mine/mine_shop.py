@@ -26,6 +26,9 @@ class MyShopTest(APP_pre.LoginTest):
         while i <= 6:
             self.driver.keyevent(13)
             i += 1
+        self.driver.implicitly_wait(5)
+        self.driver.find_element_by_id('com.zhongsu.online:id/btn_confirm').click()
+        time.sleep(3)
 
     # 有权限账号进入商铺
     def test_02(self):

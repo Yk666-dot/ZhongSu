@@ -5,6 +5,7 @@ from Script.refresh import Refresh
 import time
 import toast
 import random
+from Script import refresh
 
 
 class NewsTest(APP_pre.LoginTest):
@@ -13,9 +14,9 @@ class NewsTest(APP_pre.LoginTest):
         # 我的订阅未登录需要跳转登录
         self.driver.implicitly_wait(10)
         self.driver.find_element_by_xpath('//*[@resource-id="com.zhongsu.online:id/tab_layout"]/android.widget'
-                                          '.LinearLayout/android.widget.LinearLayout[2]').click()
-        self.driver.implicitly_wait(10)
-        self.driver.find_element_by_id('com.zhongsu.online:id/to_login').click()
+                                          '.LinearLayout/android.widget.LinearLayout[5]').click()
+        self.driver.implicitly_wait(5)
+        self.driver.find_element_by_xpath('//android.widget.TextView[@text="我的订阅"]').click()
         self.driver.implicitly_wait(10)
         self.driver.find_element_by_id('com.zhongsu.online:id/et_user_account').send_keys('18888648053')
         self.driver.find_element_by_id('com.zhongsu.online:id/btn_submit_login').click()
@@ -27,7 +28,11 @@ class NewsTest(APP_pre.LoginTest):
         while i <= 6:
             self.driver.keyevent(13)
             i += 1
+        self.driver.implicitly_wait(5)
+        self.driver.find_element_by_id('com.zhongsu.online:id/btn_confirm').click()
         time.sleep(3)
+        self.driver.find_element_by_xpath('//android.widget.TextView[@text="我的订阅"]').click()
+        self.driver.implicitly_wait(5)
         self.driver.find_element_by_xpath(
             '//android.widget.LinearLayout[@content-desc="资讯"]/android.widget.TextView').click()
         time.sleep(3)
@@ -46,7 +51,9 @@ class NewsTest(APP_pre.LoginTest):
                 self.driver.find_element_by_id('com.zhongsu.online:id/last_approve_tv').click()
                 time.sleep(3)
                 self.driver.find_element_by_id('com.zhongsu.online:id/ib_back_layout_toolbar_back_righttv').click()
-                self.driver.implicitly_wait(10)
+                time.sleep(3)
+                refresh.Refresh(self, x1=680, y1=738, y2=1428)
+                time.sleep(3)
             elif element is False:
                 self.driver.find_element_by_id('com.zhongsu.online:id/ib_back_layout_toolbar_back_righttv').click()
                 break

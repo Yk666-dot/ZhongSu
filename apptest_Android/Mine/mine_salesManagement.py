@@ -46,6 +46,9 @@ class SalesManagementTest(APP_pre.LoginTest):
         while i <= 6:
             self.driver.keyevent(13)
             i += 1
+        self.driver.implicitly_wait(5)
+        self.driver.find_element_by_id('com.zhongsu.online:id/btn_confirm').click()
+        time.sleep(3)
 
     # 切换分类
     def test_02(self):
@@ -291,7 +294,7 @@ class SalesManagementTest(APP_pre.LoginTest):
 
     # 测试快速发布
     def test_07(self):
-
+        
         for i in range(1):
             self.driver.implicitly_wait(20)
             self.driver.find_element_by_id('com.zhongsu.online:id/tv_publish').click()
